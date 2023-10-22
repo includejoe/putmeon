@@ -10,6 +10,7 @@ import 'package:jobpulse/job/domain/models/job.dart';
 import 'package:jobpulse/job/presentation/view_models/job_view_model.dart';
 import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class JobForm extends StatefulWidget {
   const JobForm({super.key, required this.getJobs, this.job});
@@ -24,7 +25,6 @@ class JobForm extends StatefulWidget {
 
 class _JobFormState extends State<JobForm> {
   final _viewModel = getIt<JobViewModel>();
-  final _userProvider = getIt<UserProvider>();
   bool _isLoading = false;
   UserModel? _user;
 
@@ -94,8 +94,7 @@ class _JobFormState extends State<JobForm> {
 
   @override
   void initState() {
-    _userProvider.init();
-    _user = _userProvider.user;
+    _user = Provider.of<UserProvider>(context, listen: false).user;
     if(widget.job != null) {
       _jobTitleController.text = widget.job!.jobTitle;
       _descriptionController.text = widget.job!.description;

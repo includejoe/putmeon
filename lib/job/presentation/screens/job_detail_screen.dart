@@ -9,6 +9,7 @@ import 'package:jobpulse/job/presentation/widgets/applicant_card.dart';
 import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class JobDetailScreen extends StatefulWidget {
@@ -20,7 +21,6 @@ class JobDetailScreen extends StatefulWidget {
 }
 
 class _JobDetailScreenState extends State<JobDetailScreen> {
-  final _userProvider = getIt<UserProvider>();
   final _jobViewModel = getIt<JobViewModel>();
   UserModel? _loggedInUser;
   List<UserModel?> _applicants = [];
@@ -56,8 +56,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _userProvider.init();
-    _loggedInUser = _userProvider.user;
+    _loggedInUser = Provider.of<UserProvider>(context, listen: false).user;
     initialize();
   }
 

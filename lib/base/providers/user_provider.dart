@@ -1,13 +1,13 @@
 import 'dart:convert';
+import 'package:jobpulse/base/di/get_it.dart';
 import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider with ChangeNotifier {
-  late SharedPreferences _prefs;
   UserModel? _user;
-
-  UserProvider() {init();}
+  final SharedPreferences _prefs;
+  UserProvider(this._prefs);
 
   UserModel? get user {
     final userJson = _prefs.getString("user");
@@ -28,9 +28,5 @@ class UserProvider with ChangeNotifier {
     _prefs.remove("user");
     _user = null;
     notifyListeners();
-  }
-
-  void init() async {
-    _prefs = await SharedPreferences.getInstance();
   }
 }

@@ -29,8 +29,6 @@ Future main() async {
 // function to run before splash screen is done
 void loadAppResources({BuildContext? context}) async {
   initialize();
-  final userProvider = getIt<UserProvider>();
-  userProvider.init();
   await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
 }
@@ -48,7 +46,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => getIt<UserProvider>()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {

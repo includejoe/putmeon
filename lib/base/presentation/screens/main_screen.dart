@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:jobpulse/base/di/get_it.dart';
+import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/job/presentation/screens/jobs_screen.dart';
 import 'package:jobpulse/user/domain/models/user.dart';
@@ -17,7 +18,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentScreen = 0;
+  UserModel? _user;
   final PageController _pageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    _user = Provider.of<UserProvider>(context, listen: false).user;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
       builder: (context, userProvider, child){
         final user = userProvider.user;
         return Scaffold(
-          body: PageView(
+          body: user == null ? const Center(child: Loader(size: 24)) : PageView(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
               onPageChanged: (int index) {

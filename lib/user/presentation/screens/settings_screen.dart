@@ -10,6 +10,7 @@ import 'package:jobpulse/user/presentation/view_models/user_view_model.dart';
 import 'package:jobpulse/user/presentation/widgets/theme_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -26,8 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _userProvider.init();
-    _user = _userProvider.user;
+    _user = Provider.of<UserProvider>(context, listen: false).user;
   }
 
   @override

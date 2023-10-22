@@ -3,8 +3,10 @@ import 'package:jobpulse/base/presentation/screens/main_screen.dart';
 import 'package:jobpulse/base/presentation/widgets/buttons/main_button.dart';
 import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/presentation/widgets/snackbar.dart';
+import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/base/utils/input_validators/email.dart';
 import 'package:jobpulse/base/utils/input_validators/password.dart';
+import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:jobpulse/user/presentation/screens/register_screen.dart';
 import 'package:jobpulse/user/presentation/widgets/bottom_info.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:jobpulse/base/presentation/widgets/inputs/text_input.dart';
 import 'package:jobpulse/base/presentation/widgets/inputs/password_input.dart';
 import 'package:jobpulse/user/presentation/view_models/user_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,10 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if(successful) {
       _emailController.clear();
       _passwordController.clear();
-      setState(() { _isLoading = false; });
+
+      setState(() {_isLoading = false;});
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainScreen())
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen())
       );
     } else {
       setState(() { _isLoading = false; });

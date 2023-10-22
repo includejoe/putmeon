@@ -12,6 +12,7 @@ import 'package:jobpulse/user/presentation/view_models/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -77,8 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _userProvider.init();
-    _user = _userProvider.user;
+    _user = Provider.of<UserProvider>(context, listen: false).user;
     _emailController.text = _user?.email ?? "";
     _nameController.text = _user?.name ?? "";
     _headlineController.text = _user?.headline ?? "";

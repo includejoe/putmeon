@@ -25,7 +25,7 @@ class JobsScreen extends StatefulWidget {
 class _JobsScreenState extends State<JobsScreen> {
   final _viewModel = getIt<JobViewModel>();
   final _refreshController = RefreshController(initialRefresh: false);
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool _isError = false;
   UserModel? _user;
   List<JobModel?> _jobs = [];
