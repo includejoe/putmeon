@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "333614860448",
+    "project_id": "jobpulse-a907d",
+    "storage_bucket": "jobpulse-a907d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333614860448:android:8be6c164742f385b62e1c5",
+        "android_client_info": {
+          "package_name": "org.includejoe.jobpulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYWDYnX_ohHTOnPrO9m0cW6diPbE64bs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
