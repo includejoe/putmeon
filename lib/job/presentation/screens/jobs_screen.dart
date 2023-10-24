@@ -16,7 +16,9 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class JobsScreen extends StatefulWidget {
-  const JobsScreen({super.key});
+  const JobsScreen({super.key, required this.user});
+
+  final UserModel user;
 
   @override
   State<JobsScreen> createState() => _JobsScreenState();
@@ -27,7 +29,6 @@ class _JobsScreenState extends State<JobsScreen> {
   final _refreshController = RefreshController(initialRefresh: false);
   bool _isLoading = false;
   bool _isError = false;
-  UserModel? _user;
   List<JobModel?> _jobs = [];
 
   void getJobs() async {
@@ -37,7 +38,7 @@ class _JobsScreenState extends State<JobsScreen> {
       _isError = false;
     });
 
-    jobs =  await _viewModel.getAllJobs(_user!);
+    jobs =  await _viewModel.getAllJobs(widget.user);
 
     if(jobs != null) {
       setState(() {
@@ -54,7 +55,6 @@ class _JobsScreenState extends State<JobsScreen> {
 
   @override
   void initState() {
-    _user = Provider.of<UserProvider>(context, listen: false).user;
     getJobs();
     super.initState();
   }
@@ -64,8 +64,8 @@ class _JobsScreenState extends State<JobsScreen> {
     final theme = Theme.of(context);
     final jobCards = _jobs.map((job) => JobCard(
       job: job!,
-      isCompany: _user!.isCompany,
-      userId: _user!.uid,
+      isCompany: widget.user.isCompany,
+      userId: widget.user.uid,
     )).toList();
 
     return Scaffold(
@@ -100,11 +100,11 @@ class _JobsScreenState extends State<JobsScreen> {
             message: "No jobs available at this time.",
           ),
         ),
-        floatingActionButton: _user!.isCompany ? FloatActionButton(
+        floatingActionButton: widget.user.isCompany ? FloatActionButton(
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (BuildContext context) => JobForm(getJobs: getJobs,)
+                context: context,
+                builder: (BuildContext context) => JobForm(getJobs: getJobs,)
               );
             },
             icon: CupertinoIcons.add

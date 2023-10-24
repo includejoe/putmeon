@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:jobpulse/base/di/get_it.dart';
 import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/job/presentation/screens/jobs_screen.dart';
-import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:jobpulse/user/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentScreen = 0;
-  UserModel? _user;
   final PageController _pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    _user = Provider.of<UserProvider>(context, listen: false).user;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +35,8 @@ class _MainScreenState extends State<MainScreen> {
                 });
               },
               children:  <Widget> [
-                const JobsScreen(),
-                ProfileScreen(user: user!, myProfile: true,),
+                JobsScreen(user: user),
+                ProfileScreen(user: user, myProfile: true,),
               ]
           ),
           bottomNavigationBar: SizedBox(
@@ -63,18 +54,18 @@ class _MainScreenState extends State<MainScreen> {
               },
               items:  <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(_currentScreen == 0 ?
-                    CupertinoIcons.bag_fill :
-                    CupertinoIcons.bag
-                    ),
-                    label: 'Jobs'
+                  icon: Icon(_currentScreen == 0 ?
+                  CupertinoIcons.bag_fill :
+                  CupertinoIcons.bag
+                  ),
+                  label: 'Jobs'
                 ),
                 BottomNavigationBarItem(
-                    icon: Icon(_currentScreen == 1 ?
-                    CupertinoIcons.person_fill :
-                    CupertinoIcons.person
-                    ),
-                    label: 'Profile'
+                  icon: Icon(_currentScreen == 1 ?
+                  CupertinoIcons.person_fill :
+                  CupertinoIcons.person
+                  ),
+                  label: 'Profile'
                 ),
               ],
             ),

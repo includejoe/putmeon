@@ -12,17 +12,17 @@ class JobViewModel {
 
   bool hasMatchingSkill(String userSkills, String jobSkills) {
     List<String> userSkillList = userSkills
-        .split(',')
-        .map((e) => e
-        .replaceAll(" ", "")
-        .toLowerCase())
-        .toList();
+      .split(',')
+      .map((e) => e
+      .replaceAll(" ", "")
+      .toLowerCase())
+      .toList();
     List<String> jobSkillList = jobSkills
-        .split(',')
-        .map((e) => e
-        .replaceAll(" ", "")
-        .toLowerCase())
-        .toList();
+      .split(',')
+      .map((e) => e
+      .replaceAll(" ", "")
+      .toLowerCase())
+      .toList();
 
     for (var userSkill in userSkillList) {
       if (jobSkillList.contains(userSkill)) {

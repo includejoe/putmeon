@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       setState(() {_isLoading = false;});
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen())
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen())
       );
     } else {
       setState(() { _isLoading = false; });
