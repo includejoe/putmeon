@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "333614860448",
-    "project_id": "jobpulse-a907d",
-    "storage_bucket": "jobpulse-a907d.appspot.com"
+    "project_number": "297083073031",
+    "project_id": "devopportunity-8c70c",
+    "storage_bucket": "devopportunity-8c70c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:333614860448:android:8be6c164742f385b62e1c5",
+        "mobilesdk_app_id": "1:297083073031:android:e8d87238bf22f6d0e070a2",
+        "android_client_info": {
+          "package_name": "org.includejoe.devopportunity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-jrxB8i4v8LA_9l8mJexb7571EO2D1Tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297083073031:android:343ace8cce0d8a8ce070a2",
         "android_client_info": {
           "package_name": "org.includejoe.jobpulse"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDYWDYnX_ohHTOnPrO9m0cW6diPbE64bs4"
+          "current_key": "AIzaSyD-jrxB8i4v8LA_9l8mJexb7571EO2D1Tk"
         }
       ],
       "services": {

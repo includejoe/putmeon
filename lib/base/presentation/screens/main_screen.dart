@@ -27,17 +27,13 @@ class _MainScreenState extends State<MainScreen> {
         final user = userProvider.user;
         return Scaffold(
           body: user == null ? const Center(child: Loader(size: 24)) : PageView(
-              controller: _pageController,
-              physics: const BouncingScrollPhysics(),
-              onPageChanged: (int index) {
-                setState(() {
-                  _currentScreen = index;
-                });
-              },
-              children:  <Widget> [
-                JobsScreen(user: user),
-                ProfileScreen(user: user, myProfile: true,),
-              ]
+            controller: _pageController,
+            physics: const BouncingScrollPhysics(),
+            onPageChanged: (int index) {setState(() { _currentScreen = index;});},
+            children:  <Widget> [
+              JobsScreen(user: user),
+              ProfileScreen(user: user, myProfile: true,),
+            ]
           ),
           bottomNavigationBar: SizedBox(
             height: Platform.isIOS ? 90 : 60,

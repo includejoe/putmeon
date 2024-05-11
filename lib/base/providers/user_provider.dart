@@ -14,7 +14,6 @@ class UserProvider with ChangeNotifier {
     if (userJson != null) {
       _user = UserModel.fromJson(json.decode(_prefs.getString("user")!));
     }
-    notifyListeners();
     return _user;
   }
 

@@ -3,6 +3,7 @@ import 'package:jobpulse/base/presentation/screens/main_screen.dart';
 import 'package:jobpulse/base/presentation/theme/theme_constants.dart';
 import 'package:jobpulse/base/presentation/theme/theme_provider.dart';
 import 'package:jobpulse/base/providers/user_provider.dart';
+import 'package:jobpulse/firebase_options.dart';
 import 'package:jobpulse/user/presentation/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,24 +14,14 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-
-  await Firebase.initializeApp();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  loadAppResources();
-  runApp(const MyApp());
-}
-
-
-// function to run before splash screen is done
-void loadAppResources({BuildContext? context}) async {
   initialize();
   await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
+  runApp(const MyApp());
 }
 
 
@@ -76,7 +67,6 @@ class MyApp extends StatelessWidget {
                     ),
                   );
                 }
-
                 return const LoginScreen(); // return login screen
               },
             )
