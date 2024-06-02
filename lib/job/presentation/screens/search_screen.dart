@@ -36,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
       List<SearchItem> items = [];
       setState(() {_isLoading = true;});
       List<JobModel?>? jobs =  await _jobViewModel.searchJobs(keyword, widget.user.location!);
-      List<UserModel?>? users =  await _userViewModel.searchUsers(keyword, widget.user.location!);
+      List<UserModel?>? users =  await _userViewModel.searchUsers(keyword, widget.user);
       debugPrint(users.toString());
 
       if(jobs != null) {
@@ -232,20 +232,36 @@ class SearchCard extends StatelessWidget {
                       backgroundColor: theme.colorScheme.primary,
                     ),
                     const SizedBox(width: 9,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold
-                          )
-                        ),
-                        Text(
-                          headline,
-                          style: theme.textTheme.bodyMedium
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                title,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.bold
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                type == "job" ? "Job" : "Professional",
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.primary
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            headline,
+                            style: theme.textTheme.bodyMedium
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

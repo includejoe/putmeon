@@ -24,7 +24,7 @@ class UserViewModel {
 
 
   // // Get All Users
-  Future<List<UserModel?>?> searchUsers(String keyword, String location) async {
+  Future<List<UserModel?>?> searchUsers(String keyword, UserModel u) async {
     List<UserModel?>? users;
 
     try {
@@ -32,10 +32,12 @@ class UserViewModel {
         .collection("users")
         .get();
 
-
       users = snapshot.docs.map((e) => UserModel.fromSnap(e))
-        .where((user) => user.headline.toLowerCase().contains(keyword.toLowerCase()) && user.location!.contains(location))
-        .toList();
+        .where((user) =>
+          user.headline.toLowerCase().contains(keyword.toLowerCase()) &&
+          user.location!.contains(u.location!) &&
+          user.uid != u.uid
+        ).toList();
 
     } catch (error) {
       users = null;
