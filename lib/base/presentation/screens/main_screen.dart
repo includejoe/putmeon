@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/job/presentation/screens/jobs_screen.dart';
+import 'package:jobpulse/job/presentation/screens/search_screen.dart';
 import 'package:jobpulse/user/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             onPageChanged: (int index) {setState(() { _currentScreen = index;});},
             children:  <Widget> [
               JobsScreen(user: user),
+              SearchScreen(user: user),
               ProfileScreen(user: user, myProfile: true,),
             ]
           ),
@@ -58,6 +60,13 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(_currentScreen == 1 ?
+                  Icons.search :
+                  CupertinoIcons.search
+                  ),
+                  label: 'Search'
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(_currentScreen == 2 ?
                   CupertinoIcons.person_fill :
                   CupertinoIcons.person
                   ),

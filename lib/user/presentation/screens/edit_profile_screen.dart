@@ -32,11 +32,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _headlineController = TextEditingController();
+  final _locationController = TextEditingController();
   final _skillsController = TextEditingController();
   final _bioController = TextEditingController();
 
   // focus nodes
   final _headlineFocusNode = FocusNode();
+  final _locationFocusNode = FocusNode();
   final _skillsFocusNode = FocusNode();
   final _bioFocusNode = FocusNode();
 
@@ -59,6 +61,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       headline: _headlineController.text,
       bio: _bioController.text,
       skills: _skillsController.text,
+      location: _locationController.text,
       profileImage: _profileImage,
       imageUrl: _user?.profilePic
     );
@@ -82,6 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _emailController.text = _user?.email ?? "";
     _nameController.text = _user?.name ?? "";
     _headlineController.text = _user?.headline ?? "";
+    _locationController.text = _user?.location ?? "";
     _bioController.text = _user?.bio ?? "";
     _skillsController.text = _user?.skills ?? "";
   }
@@ -107,137 +111,150 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
-                  Center(
-                    child: Stack(
-                      children: [
-                        _profileImage != null ? CircleAvatar(
-                          radius: 60,
-                          backgroundImage: MemoryImage(_profileImage!),
-                        ) : _user?.profilePic != null && _user?.profilePic != "" ? CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(_user!.profilePic!),
-                          backgroundColor: theme.colorScheme.primary,
-                        ) : CircleAvatar(
-                          radius: 60,
-                          backgroundImage: const AssetImage("assets/avatar.jpg"),
-                          backgroundColor: theme.colorScheme.primary,
-                        ),
-                        Positioned(
-                            bottom: 0,
-                            left: 75,
-                            child: GestureDetector(
-                              onTap: selectImage,
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary,
-                                    border: Border.all(
-                                      color: theme.colorScheme.onPrimary,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(50)
-                                ),
-                                child:  Icon(
-                                    Icons.add_a_photo,
-                                    color: theme.colorScheme.onPrimary
-                                ),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
+                Center(
+                  child: Stack(
+                    children: [
+                      _profileImage != null ? CircleAvatar(
+                        radius: 60,
+                        backgroundImage: MemoryImage(_profileImage!),
+                      ) : _user?.profilePic != null && _user?.profilePic != "" ? CircleAvatar(
+                        radius: 60,
+                        backgroundImage: NetworkImage(_user!.profilePic!),
+                        backgroundColor: theme.colorScheme.primary,
+                      ) : CircleAvatar(
+                        radius: 60,
+                        backgroundImage: const AssetImage("assets/avatar.jpg"),
+                        backgroundColor: theme.colorScheme.primary,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 75,
+                        child: GestureDetector(
+                          onTap: selectImage,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primary,
+                              border: Border.all(
+                                color: theme.colorScheme.onPrimary,
+                                width: 2,
                               ),
-                            )
+                              borderRadius: BorderRadius.circular(50)
+                            ),
+                            child:  Icon(
+                              Icons.add_a_photo,
+                              color: theme.colorScheme.onPrimary
+                            ),
+                          ),
                         )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
-                  TextInput(
-                    controller: _emailController,
-                    textInputType: TextInputType.emailAddress,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.envelope_fill,
-                    enabled: false,
-                    label: "Email",
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _nameController,
-                    textInputType: TextInputType.text,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.person_fill,
-                    enabled: true,
-                    label: "Full Name",
-                    error: _nameError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_headlineFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _headlineController,
-                    textInputType: TextInputType.text,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.bag_fill,
-                    focusNode: _headlineFocusNode,
-                    enabled: true,
-                    label: "Headline",
-                    error: _headlineError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_bioFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  !_user!.isCompany ? TextInput(
-                    controller: _skillsController,
-                    textInputType: TextInputType.text,
-                    focusNode: _skillsFocusNode,
-                    inputAction: TextInputAction.done,
-                    enabled: true,
-                    label: "Skills",
-                    placeholder: "ex. Python, Figma, Flutter",
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_bioFocusNode);
-                    },
-                  ) : Container(),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _bioController,
-                    textInputType: TextInputType.text,
-                    height: 100.0,
-                    maxLines: 5,
-                    focusNode: _bioFocusNode,
-                    inputAction: TextInputAction.done,
-                    enabled: true,
-                    label: "Bio",
-                    onFieldSubmitted: (_) {
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                TextInput(
+                  controller: _emailController,
+                  textInputType: TextInputType.emailAddress,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.envelope_fill,
+                  enabled: false,
+                  label: "Email",
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _nameController,
+                  textInputType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.person_fill,
+                  enabled: true,
+                  label: "Full Name",
+                  error: _nameError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_headlineFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _headlineController,
+                  textInputType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.bag_fill,
+                  focusNode: _headlineFocusNode,
+                  enabled: true,
+                  label: "Headline",
+                  error: _headlineError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_locationFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _locationController,
+                  textInputType: TextInputType.text,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.location_solid,
+                  focusNode: _locationFocusNode,
+                  enabled: true,
+                  label: "Location",
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_bioFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                !_user!.isCompany ? TextInput(
+                  controller: _skillsController,
+                  textInputType: TextInputType.text,
+                  focusNode: _skillsFocusNode,
+                  inputAction: TextInputAction.done,
+                  enabled: true,
+                  label: "Skills",
+                  placeholder: "ex. Python, Figma, Flutter",
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_bioFocusNode);
+                  },
+                ) : Container(),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _bioController,
+                  textInputType: TextInputType.text,
+                  height: 100.0,
+                  maxLines: 5,
+                  focusNode: _bioFocusNode,
+                  inputAction: TextInputAction.done,
+                  enabled: true,
+                  label: "Bio",
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+                const SizedBox(height: 25,),
+                _isLoading ? const Loader(size: 24) : Button(
+                  onTap: () {
+                    setState(() {
+                      _nameError = nameValidator(_nameController.text);
+                      _headlineError = headlineValidator(_headlineController.text);
+                    });
+
+                    final errors = [
+                      _nameError,
+                      _headlineError,
+                    ];
+
+                    if(errors.every((error) => error == null)) {
                       FocusScope.of(context).unfocus();
-                    },
-                  ),
-                  const SizedBox(height: 25,),
-                  _isLoading ? const Loader(size: 24) : Button(
-                      onTap: () {
-                        setState(() {
-                          _nameError = nameValidator(_nameController.text);
-                          _headlineError = headlineValidator(_headlineController.text);
-                        });
-
-                        final errors = [
-                          _nameError,
-                          _headlineError,
-                        ];
-
-                        if(errors.every((error) => error == null)) {
-                          FocusScope.of(context).unfocus();
-                          updateProfile(context);
-                        }
-                      },
-                      text: "SAVE"
-                  ),
-                  const SizedBox(height: 25,),
-                ]
+                      updateProfile(context);
+                    }
+                  },
+                  text: "SAVE"
+                ),
+                const SizedBox(height: 25,),
+              ]
             ),
           ),
         )

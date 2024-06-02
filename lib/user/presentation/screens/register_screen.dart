@@ -30,12 +30,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _headlineController = TextEditingController();
+  final _locationController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
   // focus nodes
   final _nameFocusNode = FocusNode();
   final _headlineFocusNode = FocusNode();
+  final _locationFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
   final _confirmPasswordFocusNode = FocusNode();
 
@@ -43,6 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _emailError;
   String? _nameError;
   String? _headlineError;
+  String? _locationError;
   String? _passwordError;
   String? _confirmPasswordError;
 
@@ -54,6 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _passwordController.text,
       name: _nameController.text,
       headline: _headlineController.text,
+      location: _locationController.text,
       isCompany: _isCompany
     );
 
@@ -100,165 +104,183 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final emailValidator = EmailValidator(context);
     final nameValidator = TextValidator(context);
     final headlineValidator = TextValidator(context);
+    final locationValidator = TextValidator(context);
     final passwordValidator = PasswordValidator(context, false);
     final confirmPasswordValidator = PasswordValidator(context, true);
 
     return Scaffold(
       body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.18,),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: Center(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              "assets/logo.png",
-                              color: theme.colorScheme.primary,
-                              height: 100,
-                            ),
-                            const SizedBox(height: 15,),
-                            Text(
-                                "Job Pulse",
-                                style: GoogleFonts.robotoCondensed(
-                                    fontSize: 40,
-                                    color: theme.colorScheme.primary,
-                                    fontWeight: FontWeight.w800,
-                                    fontStyle: FontStyle.italic
-                                )
-                            ),
-                          ],
-                        )
-                    ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.18,),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.22,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/logo.png",
+                          color: theme.colorScheme.primary,
+                          height: 100,
+                        ),
+                        const SizedBox(height: 15,),
+                        Text(
+                            "Put Me On",
+                            style: GoogleFonts.robotoCondensed(
+                                fontSize: 40,
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.w800,
+                                fontStyle: FontStyle.italic
+                            )
+                        ),
+                      ],
+                    )
                   ),
-                  TextInput(
-                    controller: _emailController,
-                    textInputType: TextInputType.emailAddress,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.envelope_fill,
-                    placeholder: "ex. johndoe@gmail.com",
-                    label: "Email",
-                    error: _emailError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_nameFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _nameController,
-                    textInputType: TextInputType.text,
-                    focusNode: _nameFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.person_fill,
-                    label: "Full Name",
-                    placeholder: "ex. John Doe / COMPANY NAME",
-                    error: _nameError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_headlineFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  TextInput(
-                    controller: _headlineController,
-                    textInputType: TextInputType.text,
-                    focusNode: _headlineFocusNode,
-                    inputAction: TextInputAction.next,
-                    prefixIcon: CupertinoIcons.bag_fill,
-                    label: "Headline",
-                    placeholder: "ex. Backend Developer / COMPANY HEADLINE",
-                    error: _headlineError,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Signing up as a company?", style: theme.textTheme.bodyMedium),
-                      const SizedBox(width: 5,),
-                      Switch(
-                          activeColor: theme.colorScheme.primary,
-                          activeTrackColor: theme.colorScheme.primary.withOpacity(0.4),
-                          value: _isCompany,
-                          onChanged: (value) {
-                            setState(() {
-                              _isCompany = value;
-                            });
-                          }
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15,),
-                  PasswordInput(
-                    controller: _passwordController,
-                    focusNode: _passwordFocusNode,
-                    inputAction: TextInputAction.next,
-                    error: _passwordError,
-                    label: "Password",
-                    showIcon: true,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
-                    },
-                  ),
-                  const SizedBox(height: 15,),
-                  PasswordInput(
-                    controller: _confirmPasswordController,
-                    focusNode: _confirmPasswordFocusNode,
-                    inputAction: TextInputAction.done,
-                    error: _confirmPasswordError,
-                    label: "Confirm Password",
-                    showIcon: true,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).unfocus();
-                    },
-                  ),
-                  const SizedBox(height: 25,),
-                  _isLoading ? const Loader(size: 24)  : Button(
-                      onTap: () {
-                        setState(() {
-                          _emailError = emailValidator(_emailController.text);
-                          _nameError = nameValidator(_nameController.text);
-                          _passwordError = passwordValidator(_passwordController.text, null);
-                          _headlineError = headlineValidator(_headlineController.text);
-                          _confirmPasswordError = confirmPasswordValidator(
-                              _confirmPasswordController.text,
-                              _passwordController.text
-                          );
-                        });
-
-                        final errors = [
-                          _emailError,
-                          _nameError,
-                          _passwordError,
-                          _confirmPasswordError
-                        ];
-
-                        if(errors.every((error) => error == null)) {
-                          FocusScope.of(context).unfocus();
-                          registerUser(context);
+                ),
+                TextInput(
+                  controller: _emailController,
+                  textInputType: TextInputType.emailAddress,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.envelope_fill,
+                  placeholder: "ex. johndoe@gmail.com",
+                  label: "Email",
+                  error: _emailError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_nameFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _nameController,
+                  textInputType: TextInputType.text,
+                  focusNode: _nameFocusNode,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.person_fill,
+                  label: "Full Name",
+                  placeholder: "ex. John Doe / COMPANY NAME",
+                  error: _nameError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_headlineFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _headlineController,
+                  textInputType: TextInputType.text,
+                  focusNode: _headlineFocusNode,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.bag_fill,
+                  label: "Headline",
+                  placeholder: "ex. Backend Developer / COMPANY HEADLINE",
+                  error: _headlineError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_locationFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                TextInput(
+                  controller: _locationController,
+                  textInputType: TextInputType.text,
+                  focusNode: _locationFocusNode,
+                  inputAction: TextInputAction.next,
+                  prefixIcon: CupertinoIcons.location_solid,
+                  label: "Location",
+                  placeholder: "ex. Accra - Ghana",
+                  error: _locationError,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_passwordFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Signing up as a company?", style: theme.textTheme.bodyMedium),
+                    const SizedBox(width: 5,),
+                    Switch(
+                        activeColor: theme.colorScheme.primary,
+                        activeTrackColor: theme.colorScheme.primary.withOpacity(0.4),
+                        value: _isCompany,
+                        onChanged: (value) {
+                          setState(() {
+                            _isCompany = value;
+                          });
                         }
-                      },
-                      text: "REGISTER"
-                  ),
-                  BottomInfo(
-                      info: "Already have an account ?",
-                      btnText: "LOGIN",
-                      action: () {
-                        Navigator.pop(context);
-                      }
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15,),
+                PasswordInput(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  inputAction: TextInputAction.next,
+                  error: _passwordError,
+                  label: "Password",
+                  showIcon: true,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
+                  },
+                ),
+                const SizedBox(height: 15,),
+                PasswordInput(
+                  controller: _confirmPasswordController,
+                  focusNode: _confirmPasswordFocusNode,
+                  inputAction: TextInputAction.done,
+                  error: _confirmPasswordError,
+                  label: "Confirm Password",
+                  showIcon: true,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+                const SizedBox(height: 25,),
+                _isLoading ? const Loader(size: 24)  : Button(
+                  onTap: () {
+                    setState(() {
+                      _emailError = emailValidator(_emailController.text);
+                      _nameError = nameValidator(_nameController.text);
+                      _passwordError = passwordValidator(_passwordController.text, null);
+                      _headlineError = headlineValidator(_headlineController.text);
+                      _locationError = locationValidator(_locationController.text);
+                      _confirmPasswordError = confirmPasswordValidator(
+                          _confirmPasswordController.text,
+                          _passwordController.text
+                      );
+                    });
+
+                    final errors = [
+                      _emailError,
+                      _nameError,
+                      _passwordError,
+                      _headlineError,
+                      _locationError,
+                      _confirmPasswordError
+                    ];
+
+                    if(errors.every((error) => error == null)) {
+                      FocusScope.of(context).unfocus();
+                      registerUser(context);
+                    }
+                  },
+                  text: "REGISTER"
+                ),
+                BottomInfo(
+                  info: "Already have an account ?",
+                  btnText: "LOGIN",
+                  action: () {
+                    Navigator.pop(context);
+                  }
+                ),
+              ],
             ),
-          )
+          ),
+        )
       ),
     );
   }

@@ -9,6 +9,7 @@ class UserModel {
   late final String? bio;
   late final String? skills;
   late final String? profilePic;
+  late final String? location;
 
   UserModel({
     required this.email,
@@ -19,6 +20,7 @@ class UserModel {
     this.bio,
     this.skills,
     this.profilePic,
+    this.location,
   });
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +32,7 @@ class UserModel {
     "profilePic": profilePic,
     "bio": bio,
     "skills": skills,
+    "location": location,
   };
 
   UserModel.fromJson(dynamic json) {
@@ -41,6 +44,7 @@ class UserModel {
     bio = json['bio'];
     skills = json['skills'];
     profilePic = json['profilePic'];
+    location = json['location'];
   }
 
   static UserModel fromSnap(DocumentSnapshot snap) {
@@ -54,7 +58,8 @@ class UserModel {
       profilePic: snapshot["profilePic"],
       bio: snapshot["bio"],
       skills: snapshot["skills"],
-      headline: snapshot["headline"]
+      headline: snapshot["headline"],
+      location: snapshot["location"]
     );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:jobpulse/base/di/get_it.dart';
-import 'package:jobpulse/base/presentation/theme/theme_provider.dart';
 import 'package:jobpulse/base/presentation/widgets/buttons/floating_action_button.dart';
 import 'package:jobpulse/base/presentation/widgets/empty_list_placeholder.dart';
 import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/presentation/widgets/page_refresher.dart';
-import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/job/domain/models/job.dart';
 import 'package:jobpulse/job/presentation/view_models/job_view_model.dart';
 import 'package:jobpulse/job/presentation/widgets/job_card.dart';
@@ -12,7 +10,6 @@ import 'package:jobpulse/job/presentation/widgets/job_form.dart';
 import 'package:jobpulse/user/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class JobsScreen extends StatefulWidget {
@@ -73,7 +70,7 @@ class _JobsScreenState extends State<JobsScreen> {
           automaticallyImplyLeading: false,
           backgroundColor: theme.colorScheme.primary,
           title: Text(
-            "Job Pulse",
+            "Put Me On",
             style: theme.textTheme.headlineMedium?.copyWith(
                 color: theme.colorScheme.onPrimary
             ),

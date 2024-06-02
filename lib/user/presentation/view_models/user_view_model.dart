@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:jobpulse/base/di/get_it.dart';
 import 'package:jobpulse/base/providers/user_provider.dart';
 import 'package:jobpulse/base/utils/storage_methods.dart';
@@ -23,20 +22,43 @@ class UserViewModel {
     return UserModel.fromSnap(snapshot);
   }
 
+
+  // // Get All Users
+  Future<List<UserModel?>?> searchUsers(String keyword, String location) async {
+    List<UserModel?>? users;
+
+    try {
+      QuerySnapshot snapshot = await _firestore
+        .collection("users")
+        .get();
+
+
+      users = snapshot.docs.map((e) => UserModel.fromSnap(e))
+        .where((user) => user.headline.toLowerCase().contains(keyword.toLowerCase()) && user.location!.contains(location))
+        .toList();
+
+    } catch (error) {
+      users = null;
+    }
+
+    return users;
+  }
+
   // Register New User
   Future<bool> registerUser({
     required String email,
     required String password,
     required String name,
     required String headline,
+    required String location,
     required bool isCompany,
   }) async {
     bool successful = false;
 
     try {
       UserCredential credentials = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password
       );
 
       await _firestore.collection("users").doc(credentials.user!.uid).set({
@@ -44,6 +66,7 @@ class UserViewModel {
         "email": email,
         "name": name,
         "headline": headline,
+        "location": location,
         "isCompany": isCompany,
       });
 
@@ -79,6 +102,7 @@ class UserViewModel {
   Future<bool> updateUser({
     required String name,
     required String headline,
+    required String location,
     required String bio,
     required String skills,
     required String? imageUrl,
@@ -94,6 +118,7 @@ class UserViewModel {
       await _firestore.collection("users").doc(_auth.currentUser!.uid).set({
         "name": name,
         "headline": headline,
+        "location": location,
         "bio": bio,
         "skills": skills,
         "profilePic": imageUrl

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: "Dev Opportunity",
+            title: "Put Me On",
             themeMode: themeProvider.themeMode,
             theme: lightTheme,
             darkTheme: darkTheme,

@@ -47,9 +47,34 @@ class JobViewModel {
         jobs = snapshot.docs.map((e) => JobModel.fromSnap(e)).toList();
       } else {
         jobs = snapshot.docs.map((e) => JobModel.fromSnap(e))
-            .where((job) => hasMatchingSkill(user.skills ?? "", job.skillsRequired))
+            // .where((job) => hasMatchingSkill(user.skills ?? "", job.skillsRequired))
             .toList();
       }
+    } catch (error) {
+      debugPrint(error.toString());
+      jobs = null;
+    }
+
+    return jobs;
+  }
+
+
+
+  // // Get All Jobs
+  Future<List<JobModel?>?> searchJobs(String keyword, String location) async {
+    List<JobModel?>? jobs;
+
+    try {
+      QuerySnapshot snapshot = await _firestore
+        .collection("jobs")
+        .orderBy("timestamp", descending: true)
+        .get();
+
+
+      jobs = snapshot.docs.map((e) => JobModel.fromSnap(e))
+        .where((job) => job.jobTitle.toLowerCase().contains(keyword) && job.location.contains(location))
+        .toList();
+
     } catch (error) {
       debugPrint(error.toString());
       jobs = null;
