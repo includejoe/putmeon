@@ -1,6 +1,7 @@
 import 'package:jobpulse/base/di/get_it.dart';
 import 'package:jobpulse/base/presentation/widgets/buttons/main_button.dart';
 import 'package:jobpulse/base/presentation/widgets/inputs/password_input.dart';
+import 'package:jobpulse/base/presentation/widgets/inputs/select_input.dart';
 import 'package:jobpulse/base/presentation/widgets/inputs/text_input.dart';
 import 'package:jobpulse/base/presentation/widgets/loader.dart';
 import 'package:jobpulse/base/presentation/widgets/snackbar.dart';
@@ -169,32 +170,64 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 15,),
-                TextInput(
+                SelectInput(
                   controller: _headlineController,
-                  textInputType: TextInputType.text,
                   focusNode: _headlineFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.bag_fill,
-                  label: "Headline",
-                  placeholder: "ex. Backend Developer / COMPANY HEADLINE",
+                  label: "Industry",
+                  placeholder: "ex. Manufacturing",
+                  dialogTitle: "Select Industry",
                   error: _headlineError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_locationFocusNode);
                   },
+                  options: const [
+                    "Manufacturing",
+                    "Technology",
+                    "Healthcare",
+                    "Finance",
+                    "Retail",
+                    "Transportation",
+                    "Energy",
+                    "Construction",
+                    "Agriculture",
+                    "Public Sector",
+                    "Service Industries"
+                    "Other"
+                  ],
                 ),
                 const SizedBox(height: 15,),
-                TextInput(
+                SelectInput(
                   controller: _locationController,
-                  textInputType: TextInputType.text,
                   focusNode: _locationFocusNode,
                   inputAction: TextInputAction.next,
                   prefixIcon: CupertinoIcons.location_solid,
                   label: "Location",
-                  placeholder: "ex. Accra - Ghana",
+                  placeholder: "ex. Greater Accra",
+                  dialogTitle: "Select Location",
                   error: _locationError,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_passwordFocusNode);
                   },
+                  options: const [
+                    "Ashanti Region",
+                    "Greater Accra Region",
+                    "Eastern Region",
+                    "Central Region",
+                    "Western Region",
+                    "Volta Region",
+                    "Northern Region",
+                    "Brong Ahafo Region",
+                    "Upper East Region",
+                    "Upper West Region",
+                    "Oti Region",
+                    "Savannah Region",
+                    "North East Region",
+                    "Ahafo Region",
+                    "Western North Region",
+                    "Bono East Region"
+                  ],
                 ),
                 const SizedBox(height: 15,),
                 Row(
@@ -222,6 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   inputAction: TextInputAction.next,
                   error: _passwordError,
                   label: "Password",
+                  placeholder: "Type your password",
                   showIcon: true,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_confirmPasswordFocusNode);
@@ -234,6 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   inputAction: TextInputAction.done,
                   error: _confirmPasswordError,
                   label: "Confirm Password",
+                  placeholder: "Confirm your password",
                   showIcon: true,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).unfocus();
