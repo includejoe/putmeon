@@ -202,7 +202,6 @@ class SearchCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Container(
-          height: 150,
           decoration: BoxDecoration(
             color: theme.colorScheme.background,
             borderRadius: BorderRadius.circular(12),
@@ -246,19 +245,19 @@ class SearchCard extends StatelessWidget {
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              Text(
-                                type == "job" ? "Job" : "Professional",
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.primary
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
                             ],
                           ),
                           Text(
                             headline,
                             style: theme.textTheme.bodyMedium
+                          ),
+                          Text(
+                            type == "job" ? "Job" : "Professional",
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.primary
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),

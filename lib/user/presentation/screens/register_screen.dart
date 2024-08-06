@@ -190,10 +190,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     "Retail",
                     "Transportation",
                     "Energy",
+                    "Education",
                     "Construction",
                     "Agriculture",
                     "Public Sector",
-                    "Service Industries"
+                    "Service Industries",
                     "Other"
                   ],
                 ),
